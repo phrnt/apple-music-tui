@@ -1,0 +1,6 @@
+{
+  "case": "coreaudio retry after permission change",
+  "exit_code": 0,
+  "stdout": "{\n  \"analysed_mono_samples\": 381440,\n  \"analysis\": \"4096-point Hann FFT at 30 Hz\",\n  \"backend\": \"coreaudio\",\n  \"callback_copy_max_us\": 32.333,\n  \"callback_copy_mean_us\": 13.509459279038717,\n  \"callbacks\": 749,\n  \"dropped_frames\": 0,\n  \"elapsed_seconds\": 8.0090695,\n  \"fft_and_peak_max_us\": 253.708,\n  \"fft_and_peak_mean_us\": 80.51772897196261,\n  \"fft_frames\": 214,\n  \"invalid_buffers_or_samples\": 0,\n  \"last_strongest_frequency_hz\": 82.03125,\n  \"mono_ring_bytes\": 32768,\n  \"nonzero_audio\": true,\n  \"note\": \"CPU excludes initialization and other processes (coreaudiod, WindowServer, terminal). SCK callback timing covers extraction-to-ring copy only.\",\n  \"output_device\": \"MacBook Pro Speakers\",\n  \"peak\": 0.3247891068458557,\n  \"process_cpu_percent_one_core\": 0.622069767280706,\n  \"raw_channel_peak\": 0.3371819257736206,\n  \"rms\": 0.0789771640297235,\n  \"sample_rate\": 48000.0,\n  \"scope\": \"Music.app process\",\n  \"source_channels\": 2,\n  \"source_frames\": 383488\n}\n",
+  "stderr": "Starting coreaudio (8s, analysis=true); audio stays in memory.\n"
+}

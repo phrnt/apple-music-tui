@@ -1,0 +1,35 @@
+backend = "core_audio"
+framerate = 30
+initial_preset = "Neon"
+
+[[presets]]
+name = "Neon"
+effect = "spectrum"
+colors = [[26, 220, 192], [59, 108, 255], [206, 55, 217], [255, 191, 104]]
+sensitivity = 1.0
+
+[[presets]]
+name = "Ember Fractal"
+effect = "mandelbrot"
+colors = [[43, 13, 66], [192, 36, 108], [255, 126, 39], [255, 235, 156]]
+sensitivity = 1.0
+center_x = -0.7
+center_y = 0.0
+zoom = 1.0
+iterations = 128
+
+[presets.hue]
+source = "bass"
+amount = 0.4
+smoothing_ms = 180
+
+[presets.brightness]
+source = "treble"
+amount = 0.45
+smoothing_ms = 90
+
+[[presets]]
+name = "Ocean Scope"
+effect = "waveform"
+colors = [[11, 34, 69], [27, 171, 209], [135, 250, 211]]
+sensitivity = 1.0

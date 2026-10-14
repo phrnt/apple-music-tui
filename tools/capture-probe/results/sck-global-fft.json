@@ -1,0 +1,6 @@
+{
+  "case": "ScreenCaptureKit system audio + FFT",
+  "exit_code": 1,
+  "stdout": "{\"backend\":\"sck\",\"error\":\"ScreenCaptureKit content / permission: Retained(Error(Error Domain=com.apple.ScreenCaptureKit.SCStreamErrorDomain Code=-3801 \\\"The user declined TCCs for application, window, display capture\\\" UserInfo={NSLocalizedDescription=The user declined TCCs for application, window, display capture}))\"}\n",
+  "stderr": "Starting sck (8s, analysis=true); audio stays in memory.\n"
+}

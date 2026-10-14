@@ -54,6 +54,7 @@ impl KeyMatch {
 enum BindingAction {
     Quit,
     OpenNowPlaying,
+    ToggleVisualizer,
     RefreshLibrary,
     ImportFiles,
     OpenPlayer,
@@ -97,6 +98,7 @@ impl BindingAction {
         match self {
             Self::Quit => Some(Action::Quit),
             Self::OpenNowPlaying => Some(Action::OpenNowPlaying),
+            Self::ToggleVisualizer => Some(Action::ToggleVisualizer),
             Self::RefreshLibrary => Some(Action::RefreshLibrary),
             Self::ImportFiles => Some(Action::ImportFiles),
             Self::OpenPlayer => Some(Action::OpenPlayer),
@@ -144,6 +146,13 @@ impl BindingAction {
 }
 
 const BINDINGS: &[KeyBinding] = &[
+    KeyBinding {
+        keys: "v",
+        description: "open / close live visualizer",
+        group: BindingGroup::Navigation,
+        matches: &[KeyMatch::Character('v')],
+        action: BindingAction::ToggleVisualizer,
+    },
     KeyBinding {
         keys: "j / ↓",
         description: "move selection down",

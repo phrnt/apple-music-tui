@@ -2559,6 +2559,22 @@ fn help_lines(groups: &[BindingGroup], theme: Theme) -> Vec<Line<'static>> {
 }
 
 fn context_help_lines(state: &AppState, theme: Theme) -> Vec<Line<'static>> {
+    if state.visualizer_open {
+        return vec![
+            Line::default(),
+            Line::styled(
+                "Current View — Visualizer",
+                Style::default().fg(theme.accent),
+            ),
+            Line::from("v / Esc / q    return to previous view"),
+            Line::from("Tab            next visualization"),
+            Line::from("V              next preset"),
+            Line::from("c              retry audio capture"),
+            Line::from("Space / n / p  play/pause · next · previous"),
+            Line::from("[ / ]          seek"),
+            Line::from("- / +          volume"),
+        ];
+    }
     let (title, entries) = match &state.navigation.active {
         Route::Section(Screen::Songs) => (
             "Current View — Tracks",

@@ -10,3 +10,4 @@ pub mod input;
 pub mod runtime;
 pub mod terminal;
 pub mod ui;
+pub mod visualizer;

@@ -25,6 +25,7 @@ If you enjoy tools like **lazygit**, **k9s**, **btop**, or **yazi**, the interfa
 - 📚 Browse local Apple Music library
 - 🖼 Terminal album artwork
 - 🎧 Full-screen Now Playing
+- 🌈 Live spectrum, stereo waveform and frequency-colored Mandelbrot visualizations
 - 🔀 Session-based shuffle
 - 🔎 Search, sorting and filtering
 - 📂 Playlist and album playback
@@ -230,6 +231,7 @@ The underlying library track is never deleted.
 | `P`     | Play playlist or album        |
 | `.`     | Jump to current playing track |
 | `N`     | Full-screen Now Playing       |
+| `v`     | Live visualizer               |
 | `Space` | Play / Pause                  |
 | `n/p`   | Next / Previous               |
 | `s`     | Toggle shuffle                |
@@ -254,10 +256,19 @@ The optional Apple Music API path is reserved for future cloud features.
 
 ## Development
 
+The live visualizer uses an unmuted Music.app Core Audio tap by default. In the
+visualizer, `Tab` changes effects, `V` changes presets and `c` retries capture.
+Presets and new Rust modules are contributor-friendly; see
+[visualizer settings and contribution guide](docs/VISUALIZERS.md).
+
+Grant your terminal system audio capture permission in macOS Privacy & Security.
+Audio remains in memory and is never recorded. Speaker capture has been verified;
+Bluetooth and AirPlay compatibility still need live checks.
+
 ```bash
-cargo fmt --check
-cargo clippy --all-targets --all-features -- -D warnings
-cargo test
+cargo fmt --all --check
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+cargo test --workspace
 cargo build --release
 ```
 

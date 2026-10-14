@@ -179,7 +179,48 @@ pub fn reduce(state: &mut AppState, action: Action) -> Vec<Command> {
         }
     }
 
+    if state.visualizer_open {
+        match action {
+            Action::Quit | Action::Back | Action::ToggleVisualizer => {
+                state.visualizer_open = false;
+                return Vec::new();
+            }
+            Action::CycleVisualizer => {
+                state.visualizer_selection = state.visualizer_selection.wrapping_add(1);
+                return Vec::new();
+            }
+            Action::CycleVisualizerPreset => {
+                state.visualizer_preset = state.visualizer_preset.wrapping_add(1);
+                return Vec::new();
+            }
+            Action::RetryVisualizer => {
+                state.visualizer_retry = state.visualizer_retry.wrapping_add(1);
+                return Vec::new();
+            }
+            Action::InputClosed
+            | Action::Resize { .. }
+            | Action::Backend(_)
+            | Action::ArtworkConversionCompleted { .. }
+            | Action::RetryArtwork { .. }
+            | Action::ToggleHelp
+            | Action::Play
+            | Action::Pause
+            | Action::PlayPause
+            | Action::NextTrack
+            | Action::PreviousTrack
+            | Action::SeekBackward
+            | Action::SeekForward
+            | Action::VolumeDown
+            | Action::VolumeUp
+            | Action::ToggleShuffle
+            | Action::CycleRepeat => {}
+            _ => return Vec::new(),
+        }
+    }
+
     match action {
+        Action::ToggleVisualizer => state.visualizer_open = true,
+        Action::CycleVisualizer | Action::CycleVisualizerPreset | Action::RetryVisualizer => {}
         Action::Quit if matches!(state.navigation.active, Route::NowPlaying) => {
             navigate_back(state);
         }

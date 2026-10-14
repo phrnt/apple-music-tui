@@ -1,0 +1,6 @@
+{
+  "case": "sck retry after permission change",
+  "exit_code": 0,
+  "stdout": "{\n  \"analysed_mono_samples\": 383040,\n  \"analysis\": \"4096-point Hann FFT at 30 Hz\",\n  \"backend\": \"sck\",\n  \"callback_copy_max_us\": 149.625,\n  \"callback_copy_mean_us\": 20.47196259351621,\n  \"callbacks\": 401,\n  \"dropped_frames\": 0,\n  \"elapsed_seconds\": 8.006369958,\n  \"fft_and_peak_max_us\": 248.25,\n  \"fft_and_peak_mean_us\": 88.2145023255814,\n  \"fft_frames\": 215,\n  \"invalid_buffers_or_samples\": 0,\n  \"last_strongest_frequency_hz\": 164.0625,\n  \"mono_ring_bytes\": 32768,\n  \"nonzero_audio\": true,\n  \"note\": \"CPU excludes initialization and other processes (coreaudiod, WindowServer, terminal). SCK callback timing covers extraction-to-ring copy only.\",\n  \"peak\": 0.3212997317314148,\n  \"process_cpu_percent_one_core\": 1.015379009794191,\n  \"raw_channel_peak\": 0.3381344676017761,\n  \"rms\": 0.06399313210090497,\n  \"sample_rate\": 48000.0,\n  \"scope\": \"system mix; audio output only\",\n  \"source_channels\": 2,\n  \"source_frames\": 384960\n}\n",
+  "stderr": "Starting sck (8s, analysis=true); audio stays in memory.\n"
+}

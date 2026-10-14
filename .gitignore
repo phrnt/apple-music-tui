@@ -1,5 +1,5 @@
-/target/
-/.DS_Store
+target/
+.DS_Store
 /.env
 /.env.*
 *.log

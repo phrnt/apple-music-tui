@@ -1,0 +1,6 @@
+{
+  "case": "system-mix Core Audio tap + FFT",
+  "exit_code": 2,
+  "stdout": "{\n  \"analysed_mono_samples\": 381440,\n  \"analysis\": \"4096-point Hann FFT at 30 Hz\",\n  \"backend\": \"coreaudio\",\n  \"callback_copy_max_us\": 45.333,\n  \"callback_copy_mean_us\": 14.199959893048128,\n  \"callbacks\": 748,\n  \"dropped_frames\": 0,\n  \"elapsed_seconds\": 8.00867475,\n  \"fft_and_peak_max_us\": 533.75,\n  \"fft_and_peak_mean_us\": 102.95852093023255,\n  \"fft_frames\": 215,\n  \"invalid_buffers_or_samples\": 0,\n  \"last_strongest_frequency_hz\": 23988.28125,\n  \"mono_ring_bytes\": 32768,\n  \"nonzero_audio\": false,\n  \"note\": \"CPU excludes initialization and other processes (coreaudiod, WindowServer, terminal). SCK callback timing covers extraction-to-ring copy only.\",\n  \"output_device\": \"MacBook Pro Speakers\",\n  \"peak\": 0.0,\n  \"process_cpu_percent_one_core\": 0.7395605621267114,\n  \"rms\": 0.0,\n  \"sample_rate\": 48000.0,\n  \"scope\": \"system mix\",\n  \"source_channels\": 2,\n  \"source_frames\": 383488\n}\n",
+  "stderr": "Starting coreaudio (8s, analysis=true); audio stays in memory.\n"
+}

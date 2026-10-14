@@ -369,6 +369,10 @@ pub struct AppState {
     pub playlist_track_removal_in_flight: bool,
     pub import_in_flight: bool,
     pub terminal_size: (u16, u16),
+    pub visualizer_open: bool,
+    pub visualizer_selection: usize,
+    pub visualizer_preset: usize,
+    pub visualizer_retry: usize,
 }
 
 impl Default for AppState {
@@ -420,6 +424,10 @@ impl Default for AppState {
             playlist_track_removal_confirmation: None,
             playlist_track_removal_in_flight: false,
             import_in_flight: false,
+            visualizer_open: false,
+            visualizer_selection: 0,
+            visualizer_preset: 0,
+            visualizer_retry: 0,
             terminal_size: (80, 24),
         }
     }

@@ -15,6 +15,19 @@ use ratatui::{
 
 use crate::error::AppError;
 
+thread_local! {
+    static RECOVERABLE_BACKGROUND_PANIC: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// A caught worker panic must not run the global terminal-restoration hook:
+/// that would leave the still-running UI outside raw/alternate-screen mode.
+pub(crate) fn catch_background_panic<T>(f: impl FnOnce() -> T) -> std::thread::Result<T> {
+    let previous = RECOVERABLE_BACKGROUND_PANIC.with(|value| value.replace(true));
+    let result = panic::catch_unwind(panic::AssertUnwindSafe(f));
+    RECOVERABLE_BACKGROUND_PANIC.with(|value| value.set(previous));
+    result
+}
+
 pub type AppTerminal = Terminal<CrosstermBackend<Stdout>>;
 
 pub struct TerminalSession {
@@ -83,6 +96,12 @@ pub fn restore_terminal() -> std::io::Result<()> {
 pub fn install_panic_hook() {
     let original_hook = panic::take_hook();
     panic::set_hook(Box::new(move |panic_info| {
+        if RECOVERABLE_BACKGROUND_PANIC
+            .try_with(std::cell::Cell::get)
+            .unwrap_or(false)
+        {
+            return;
+        }
         let _ = restore_terminal();
         original_hook(panic_info);
     }));

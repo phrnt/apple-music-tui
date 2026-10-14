@@ -44,16 +44,29 @@ pub async fn run<B: MusicBackend>(
     let cancellation = InputCancellation(Arc::clone(&cancelled));
 
     let input_task = spawn_input_reader(input_sender, Arc::clone(&cancelled));
+    let backend_name = backend.name();
     let backend_task = spawn_worker(backend, command_receiver, backend_sender);
     let mut backend_open = true;
     let mut awaiting_second_g = false;
     let mut artwork_renderer = ui::artwork::InlineArtworkRenderer::default();
+    let mut visualizer = crate::visualizer::Controller::load(backend_name == "Music.app");
+    visualizer.initialize(&mut state);
+    let mut animation = tokio::time::interval(visualizer.period());
+    animation.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
 
     loop {
+        visualizer.sync(&mut state);
+        let visualization_visible = state.visualizer_open && !state.help_open;
         let render_started = Instant::now();
         let mut artwork_layout = None;
         terminal
-            .draw(|frame| artwork_layout = ui::render_with_artwork_layout(frame, &state))
+            .draw(|frame| {
+                if visualization_visible {
+                    visualizer.render(frame, &state);
+                } else {
+                    artwork_layout = ui::render_with_artwork_layout(frame, &state);
+                }
+            })
             .map_err(AppError::Terminal)?;
         artwork_renderer
             .present(terminal, &state, artwork_layout)
@@ -68,6 +81,14 @@ pub async fn run<B: MusicBackend>(
                 match input {
                     Some(Event::Key(key)) if state.help_open || state.action_menu.is_some() || state.sort_menu.is_some() => {
                         map_navigation_key(key, &mut awaiting_second_g)
+                    }
+                    Some(Event::Key(key)) if state.visualizer_open => {
+                        match key.code {
+                            KeyCode::Tab => Some(Action::CycleVisualizer),
+                            KeyCode::Char('V') => Some(Action::CycleVisualizerPreset),
+                            KeyCode::Char('c') => Some(Action::RetryVisualizer),
+                            _ => map_navigation_key(key, &mut awaiting_second_g),
+                        }
                     }
                     Some(Event::Key(key)) if state.filter_editor.is_some() => {
                         awaiting_second_g = false;
@@ -96,6 +117,7 @@ pub async fn run<B: MusicBackend>(
             }
             artwork_event = artwork_receiver.recv() => artwork_event,
             import_event = import_receiver.recv() => import_event,
+            _ = animation.tick(), if visualization_visible && state.playback.status == crate::domain::PlaybackStatus::Playing => None,
         };
 
         if let Some(action) = action {
@@ -164,6 +186,7 @@ pub async fn run<B: MusicBackend>(
     }
 
     cancellation.cancel();
+    visualizer.finish().await;
     if state.stop_playback_on_exit {
         let _ = tokio::time::timeout(
             Duration::from_millis(1_500),
